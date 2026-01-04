@@ -1,10 +1,18 @@
+/*
+ * ButtonBox Firmware
+ * Copyright (c) 2026 Yi donghoon <donghoon@studio42.kr>
+ * 
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+
 #ifndef ROTARY_STATE_MACHINE_H
 #define ROTARY_STATE_MACHINE_H
 
 /*
  * Rotary Encoder 상태 머신
- * 원본: brianlow/Rotary 라이브러리
- * 
+ * 원본: brianlow/Rotary 라이브러리 https://github.com/brianlow/Rotary 
+ *
  * 원리:
  * - 엔코더는 그레이 코드로 동작 (한 번에 1비트만 변화)
  * - CW:  00 → 01 → 11 → 10 → 00
