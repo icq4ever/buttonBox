@@ -12,9 +12,9 @@ Molex connectors are recommended, but any 2.54 mm pitch connector can be used as
 | 2 | MCP23017-E/SO | I2C IO expander ([mouser](https://www.mouser.com/ProductDetail/Microchip-Technology/MCP23017-E-SO?qs=usxtMOJb1Rz8hft7vV7YMQ%3D%3D)) |
 | 5 | PEC11R-4315F-S0012 | Rotary Encoder (with button) ([mouser](https://www.mouser.com/ProductDetail/Bourns/PEC11R-4315F-S0012?qs=Zq5ylnUbLm4NmQU9A1GE4Q%3D%3D)) |
 | 1 | SPST Rocker Switch with LED | 3-pin connector |
-| 2 | 0603 4.7KΩ | I2C pull-up resistor |
-| 6 | 0603 330Ω | LED resistor |
-| 2 | 0603 0.1µF | Decoupling capacitor |
+| 2 | 1608(0603) 4.7KΩ | I2C pull-up resistor |
+| 6 | 1608(0603) 330Ω | LED resistor |
+| 2 | 1608(0603) 0.1µF | Decoupling capacitor |
 | 16 | Molex 5267-2 | 2-pin connector |
 | 12 | Molex 5267-3 | 3-pin connector |
 
@@ -29,6 +29,7 @@ Molex connectors are recommended, but any 2.54 mm pitch connector can be used as
 | LED rocker switch | 2 | 3-pin |
 | Keybox (ACC/START) | 1 | 2-pin |
 | LED indicators | 6 | 2-pin |
+| SPI Device(OLED display) | 1 | 6-pin | 
 
 ## SimHub Integration
 
