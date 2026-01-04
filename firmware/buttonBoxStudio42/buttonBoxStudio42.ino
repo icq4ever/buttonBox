@@ -3,6 +3,8 @@
 #include <Adafruit_MCP23X17.h>
 #include "RotaryStateMachine.h"
 
+uint32_t lastSend, now = 0;
+
 // ===== USB HID =====
 uint8_t const desc_hid_report[] = { TUD_HID_REPORT_DESC_GAMEPAD() };
 Adafruit_USBD_HID usb_hid(desc_hid_report, sizeof(desc_hid_report), 
@@ -52,7 +54,7 @@ unsigned long keyDebounceTime = 0;
 
 void setup() {
     usb_hid.begin();
-    Serial.begin(115200);      
+    Serial.begin(115200);
     
     // 로커 스위치 & LED
     pinMode(ROCKER_PIN, INPUT);
@@ -81,6 +83,8 @@ void setup() {
     
     mcp1Status = mcp1.readGPIOAB();
     mcp2Status = mcp2.readGPIOAB();
+
+    lastSend = millis();
     
     // 키박스 초기 상태
     bool acc = !(mcp2Status & (1 << 14));
@@ -100,12 +104,6 @@ bool pressed(uint16_t val, int bit) {
 void processSimHub() {
     while (Serial.available()) {
         char cmd = Serial.read();
-        
-        // SimHub 핸드셰이크
-        if (cmd == '?') {
-            Serial.println("studio42-buttonBox");  // 장치 이름 응답
-            return;
-        }
         
         switch (cmd) {
             // RPM 상태
@@ -205,7 +203,7 @@ void processKeybox(unsigned long now) {
 
 void loop() {
     gp.buttons = 0;
-    unsigned long now = millis();
+    now = millis();
     
     mcp1Status = mcp1.readGPIOAB();
     mcp2Status = mcp2.readGPIOAB();
@@ -265,8 +263,11 @@ void loop() {
     
     // ===== 키박스 → 버튼 28~29 =====
     processKeybox(now);
-
     processSimHub();
     
-    usb_hid.sendReport(0, &gp, sizeof(gp));
+    static hid_gamepad_report_t prev = {};
+    if (usb_hid.ready() && memcmp(&gp, &prev, sizeof(gp)) != 0) {
+        usb_hid.sendReport(0, &gp, sizeof(gp));
+        prev = gp;
+    }  
 }
